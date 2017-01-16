@@ -12,6 +12,40 @@ Socket是TCP/IP协议的一个十分流行的编程界面，一个Socket由一�
 服务端的代码，在服务端特定的端口9999监听客户端请求，一旦有请求，便会执行，而后继续监听。
 使用accept()这个阻塞函数，就是该方法被调用后一直等待客户端的请求，直到有请求且连接到同一个端口，accept()返回一个对应于客户端的Socket。
 
+#客户端发送数据主要代码：
+```
+    private void connectServer() {
+        new Thread() {
+            @Override
+            public void run() {
+                try {
+                    mSocket = new Socket("10.19.83.64", 9999);  //服务端所运行的设备的IP
+                    Log.d("rain", "mSocket:"+mSocket);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.start();
+    }
+
+    private void sendMessage() {
+        new Thread() {
+            @Override
+            public void run() {
+                if(mSocket != null) {
+                    try {
+                        DataOutputStream writer = new DataOutputStream(mSocket.getOutputStream());
+                        writer.writeUTF("Hello, my id is 007!");
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }.start();
+    }
+```
+
+#服务器端接收数据主要代码：
 ```
     private void startServer() {
         try {

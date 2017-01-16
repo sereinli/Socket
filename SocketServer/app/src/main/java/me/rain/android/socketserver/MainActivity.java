@@ -84,7 +84,6 @@ public class MainActivity extends AppCompatActivity {
                     String messageFromClient = dataInputStream.readUTF();
 
                     Log.d("rain", "server received message from client:"+messageFromClient);
-//                    mTextView.setText(message);
                     Message message = new Message();
                     message.what = UPDATE_MESSAGE_FROM_CLIENT;
                     message.obj = messageFromClient;
